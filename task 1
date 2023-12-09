@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+
+    <div id="taskListContainer">
+        <h1>Task List</h1>
+        <ul id="taskList">
+            <!-- Tasks will be dynamically added here -->
+        </ul>
+        <div id="taskInputContainer">
+            <input type="text" id="newTaskInput" placeholder="Add a new task">
+            <button onclick="addTask()">Add Task</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+
+</body>
+</html>
+// javascript
+// script.js
+
+
+function addTask() {
+    const taskInput = document.getElementById('newTaskInput');
+    const taskText = taskInput.value.trim();
+
+    if (taskText !== '') {
+        const taskList = document.getElementById('taskList');
+        const newTaskItem = document.createElement('li');
+        newTaskItem.textContent = taskText;
+        taskList.appendChild(newTaskItem);
+
+        
+        taskInput.value = '';
+
+        
+        saveTasksToLocalStorage();
+    }
+}
+
+
+function saveTasksToLocalStorage() {
+    const taskList = document.getElementById('taskList');
+    const tasks = Array.from(taskList.children).map(task => task.textContent);
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
